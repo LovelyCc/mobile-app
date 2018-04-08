@@ -8,6 +8,9 @@
 			  <van-tabbar-item icon="gold-coin" info="20">标签</van-tabbar-item>
 			</van-tabbar>
 	  </div>
+	  <van-cell-group>
+  <van-field v-model="value" placeholder="请输入用户名" />
+</van-cell-group>
 	  <div class="box">
 	  	<h1 class="title">hello</h1>
 	  </div>
