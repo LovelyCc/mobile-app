@@ -22,7 +22,8 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      active: 0
+      active: 0,
+      value: 'aaa'
     }
   }
 }
