@@ -60,7 +60,9 @@
 					username: this.username,
 					password: this.password
 				}).then((res) => {
-					console.log(res)
+					console.log(res);
+					localStorage.setItem("wrct-username",res.data.username);
+					this.goTo("/home")
 				},(err) => {
 					console.log(err)
 				})
