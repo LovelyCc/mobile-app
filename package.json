@@ -5,7 +5,7 @@
   "author": "hzp",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --open --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -18,7 +18,8 @@
     "mockjs": "^1.0.1-beta3",
     "vant": "^1.0.3",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-animate": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -12,9 +12,9 @@
 			    placeholder="请输入密码"
 			  />
 			</van-cell-group>
-			<van-button 
-				style="margin-top: 20px; height: 45px; line-height: 45px;" 
-				size="large" 
+			<van-button
+				style="margin-top: 20px; height: 45px; line-height: 45px;"
+				size="large"
 				type="primary"
 				:loading="loading"
 				@click="checkLogin()"
@@ -25,7 +25,7 @@
 				<router-link class="forgetPwd" to="/forgetPwd" tag="span">忘记密码</router-link>
 			</p>
 		</div>
-		
+
 	</div>
 </template>
 
@@ -62,7 +62,7 @@
 				}).then((res) => {
 					console.log(res);
 					localStorage.setItem("wrct-username",res.data.username);
-					this.goTo("/home")
+					this.goTo("/commend")
 				},(err) => {
 					console.log(err)
 				})

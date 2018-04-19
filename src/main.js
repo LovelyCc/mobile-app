@@ -8,6 +8,7 @@ import Vant from 'vant'
 import 'vant/lib/vant-css/index.css'
 import axios from 'axios'
 import './mock'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 Vue.config.productionTip = false
 Vue.use(Vant)
