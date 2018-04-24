@@ -1,6 +1,6 @@
 <template>
 	<div>
-    <van-tabbar style="background-color: #eee;" v-model="active">
+    <van-tabbar style="background-color: #eee; z-index: 1" v-model="active">
       <van-tabbar-item icon="shop" to="/commend">
         <span>推荐</span>
         <template slot="icon" slot-scope="props">

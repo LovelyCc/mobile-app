@@ -1,14 +1,30 @@
 <template>
   <div id="app">
-  <transition name="fade">
-    <router-view/>
-  </transition>
+    <transition :name="transitionName">
+      <router-view class="Router"></router-view>
+　　</transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      transitionName: 'slide-right'
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      let isBack = this.$router.isBack  //  监听路由变化时的状态为前进还是后退
+      if(isBack) {
+        this.transitionName = 'slide-right'
+      } else {
+        this.transitionName = 'slide-left'
+      }
+      this.$router.isBack = false
+    }
+  }
 }
 </script>
 
@@ -18,10 +34,24 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.Router {
+  transition: all .4s ease;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.slide-left-enter,
+.slide-right-leave-active {
   opacity: 0;
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(-100%, 0);
+  transform: translate(-100% 0);
 }
 </style>

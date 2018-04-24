@@ -15,6 +15,11 @@ Vue.config.productionTip = false
 Vue.use(Vant)
 Vue.use(VueRouter)
 
+VueRouter.prototype.goBack = function () {
+  this.isBack = true;
+  this.go(-1);
+}
+
 Vue.prototype.Axios = axios;
 Vue.prototype.goTo = function(address){
     this.$router.push(address);

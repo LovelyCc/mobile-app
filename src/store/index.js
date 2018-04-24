@@ -38,6 +38,11 @@ export default new Vuex.Store({
       })
     },
 
+    // 减去某一项
+    reduceOne(state,index) {
+      state.goodsList.splice(index,1)
+    },
+
     // 清空购物车
     clearCart(state) {
       state.goodsList = [];
@@ -49,7 +54,16 @@ export default new Vuex.Store({
     totalPrice: state => {
       let sum = 0;
       state.goodsList.forEach((item) => {
-        sum += parseInt(item.price) * parseInt(item.num);
+        sum += item.price * item.num;
+      })
+      return sum;
+    },
+
+    // 总数量
+    totalNum: state => {
+      let sum = 0;
+      state.goodsList.forEach((item) => {
+        sum += parseInt(item.num);
       })
       return sum;
     }

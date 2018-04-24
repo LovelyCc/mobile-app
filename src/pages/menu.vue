@@ -1,45 +1,62 @@
 <template>
-	<div style="height: 100%">
-    <van-nav-bar title="菜单"/>
-    <div class="sidebar">
-      <ul>
-        <li v-for="(item,index) in classes" @click="getMenu(index)" :class="{'active': item.key == active}">{{item.name}}</li>
-      </ul>
+	<div>
+    <div class="header">
+      菜单
     </div>
-    <div style="position: relative;float: right; width: 75%">
-      <div v-for="(item, index) in menu" class="item">
-        <div class="img-box">
-          <img :src='item.path' alt="">
-        </div>
-        <div style="float: right; width: 75%; height: 100%; padding: 10px 5px;">
-          <h3>{{item.name}}</h3>
-          <div class="bottom">
-            <span class="price">
-              ￥{{item.price}}
-            </span>
-            <p style="float: right; margin-right: 10px" v-if="item.num > 0">
-              <span class="reduce" @click="reduceNum(index)">-</span>
-              {{item.num}}
-              <span class="add" @click="addNum(index)">+</span>
-            </p>
-            <p style="float: right; margin-right: 10px" v-if="item.num == 0">
-              <img src="../assets/cart.png" alt="" style="width: 26px;height: 26px;" @click="addGoods(index)">
-            </p>
+    <div style="margin-top: 44px;">
+      <div class="sidebar">
+        <ul>
+          <li v-for="(item,index) in classes" @click="getMenu(index)" :class="{'active': item.key == active}">{{item.name}}</li>
+        </ul>
+      </div>
+      <div style="position: relative;float: right; width: 75%">
+        <div v-for="(item, index) in menu" class="item">
+          <div class="img-box">
+            <img :src='item.path' alt="">
+          </div>
+          <div style="float: right; width: 75%; height: 100%; padding: 10px 5px;">
+            <h3>{{item.name}}</h3>
+            <div class="bottom">
+              <span class="price">
+                ￥{{item.price}}
+              </span>
+              <p style="float: right; margin-right: 10px" v-if="item.num > 0">
+                <span class="reduce" @click="reduceNum(index)">-</span>
+                {{item.num}}
+                <span class="add" @click="addNum(index)">+</span>
+              </p>
+              <p style="float: right; margin-right: 10px" v-if="item.num == 0">
+                <img src="../assets/cart.png" alt="" style="width: 26px;height: 26px;" @click="addGoods(index)">
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <p>{{totalPrice}}</p>
+    </div>
+    <div class="cart" v-if="totalNum >= 1">
+      <span class="text-span">
+        合计：
+        <span>
+          {{totalPrice}}
+        </span>
+        元
+      </span>
+      <div class="button" @click="confirmOrder()">
+        去结算 >
+        <span>{{totalNum}}</span>
+      </div>
     </div>
 	</div>
 </template>
 
 <script>
   import {mapState,mapGetters,mapMutations} from 'vuex'
-	export default {
-		name: "List",
-		data() {
-			return {
-			  active: 0,
+
+  export default {
+    name: "List",
+    data() {
+      return {
+        active: 0,
         classes: [
           {
             name: '饮料/水',
@@ -70,7 +87,7 @@
           {
             name: '娃哈哈',
             path: require('../assets/wahaha.jpg'),
-            price: '2',
+            price: '1.5',
             num: 0
           },
           {
@@ -86,46 +103,60 @@
             num: 0
           }
         ]
-			}
-		},
+      }
+    },
     methods: {
 
-		  // 切换分类
-		  getMenu(index) {
-		    this.active = index
+      // 切换分类
+      getMenu(index) {
+        this.active = index
       },
 
       // 点击购物车图片
       addGoods(index) {
-		    this.menu[index].num = 1;
+        this.menu[index].num = 1;
         this.addToCart(this.menu[index]);
       },
 
       //点击加号
       addNum(index) {
-        // this.menu[index].num++;
         this.updateCart(this.menu[index]);
       },
 
       // 点击减号
       reduceNum(index) {
-		    if(this.menu[index].num > 1){
-          // this.menu[index].num--;
-        }else {
+        if (this.menu[index].num > 1) {
+        } else {
           this.menu[index].num = 0;
         }
         this.reduceCart(this.menu[index].name);
       },
 
-      ...mapMutations(['addToCart','updateCart','reduceCart'])
+      // 点击确认订单
+      confirmOrder() {
+        this.$router.push("/confirm")
+      },
+
+      ...mapMutations(['addToCart', 'updateCart', 'reduceCart'])
     },
     computed: {
-      ...mapGetters(['totalPrice'])
+      ...mapGetters(['totalPrice', 'totalNum'])
     }
-	}
+  };
 </script>
 
 <style scoped lang="less">
+  .header{
+    width: 100%;
+    height: 44px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+    text-align: center;
+    line-height: 44px;
+  }
   .sidebar{
     float: left;
     box-sizing: border-box;
@@ -136,7 +167,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    z-index: -1;
+    z-index: 0;
     background-color: #f7f7f7;
     padding-top: 46px;
     ul{
@@ -203,5 +234,49 @@
       }
     }
 
+  }
+  .cart {
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid #eee;
+    position: absolute;
+    bottom: 50px;
+    z-index: 2;
+    background-color: #fff;
+    padding-left: 30%;
+    line-height: 60px;
+    .text-span {
+      font-size: 16px;
+      span{
+        font-weight: 600;
+        font-size: 22px;
+      }
+    }
+    .button{
+      border: 1px solid #f50;
+      color: #f50;
+      width: 100px;
+      height: 35px;
+      position: absolute;
+      right: 7%;
+      top: 22%;
+      line-height: 33px;
+      text-align: center;
+      border-radius: 5px;
+      span{
+        position: absolute;
+        top: -13px;
+        right: -13px;
+        display: block;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        font-size: 14px;
+        border-radius: 50%;
+        background-color: #f50;
+        color: #fff;
+      }
+    }
   }
 </style>

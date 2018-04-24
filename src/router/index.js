@@ -7,6 +7,7 @@ import Commend from '@/pages/commend'
 import Menu from '@/pages/menu'
 import Orderlist from '@/pages/orderList'
 import User from '@/pages/user'
+import Confirm from '@/pages/confirm'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
           component: User
         }
       ]
+    },
+    {
+      path: '/confirm',
+      name: 'Confirm',
+      component: Confirm
     }
   ]
 });
