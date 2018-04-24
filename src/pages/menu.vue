@@ -18,21 +18,23 @@
               ￥{{item.price}}
             </span>
             <p style="float: right; margin-right: 10px" v-if="item.num > 0">
-              <span class="reduce">-</span>
+              <span class="reduce" @click="reduceNum(index)">-</span>
               {{item.num}}
-              <span class="add">+</span>
+              <span class="add" @click="addNum(index)">+</span>
             </p>
             <p style="float: right; margin-right: 10px" v-if="item.num == 0">
-              <img src="../assets/cart.png" alt="" style="width: 26px;height: 26px;">
+              <img src="../assets/cart.png" alt="" style="width: 26px;height: 26px;" @click="addGoods(index)">
             </p>
           </div>
         </div>
       </div>
+      <p>{{totalPrice}}</p>
     </div>
 	</div>
 </template>
 
 <script>
+  import {mapState,mapGetters,mapMutations} from 'vuex'
 	export default {
 		name: "List",
 		data() {
@@ -69,27 +71,56 @@
             name: '娃哈哈',
             path: require('../assets/wahaha.jpg'),
             price: '2',
-            num: 1
+            num: 0
           },
           {
             name: '雪碧',
             path: require('../assets/xuebi.jpg'),
             price: '3',
-            num: 1
+            num: 0
           },
           {
             name: '水晶葡萄',
             path: require('../assets/aaa.jpg'),
             price: '5',
-            num: 1
+            num: 0
           }
         ]
 			}
 		},
     methods: {
+
+		  // 切换分类
 		  getMenu(index) {
 		    this.active = index
-      }
+      },
+
+      // 点击购物车图片
+      addGoods(index) {
+		    this.menu[index].num = 1;
+        this.addToCart(this.menu[index]);
+      },
+
+      //点击加号
+      addNum(index) {
+        // this.menu[index].num++;
+        this.updateCart(this.menu[index]);
+      },
+
+      // 点击减号
+      reduceNum(index) {
+		    if(this.menu[index].num > 1){
+          // this.menu[index].num--;
+        }else {
+          this.menu[index].num = 0;
+        }
+        this.reduceCart(this.menu[index].name);
+      },
+
+      ...mapMutations(['addToCart','updateCart','reduceCart'])
+    },
+    computed: {
+      ...mapGetters(['totalPrice'])
     }
 	}
 </script>

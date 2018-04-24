@@ -9,6 +9,7 @@ import 'vant/lib/vant-css/index.css'
 import axios from 'axios'
 import './mock'
 import 'vue2-animate/dist/vue2-animate.min.css'
+import store from './store/index'
 
 Vue.config.productionTip = false
 Vue.use(Vant)
@@ -23,6 +24,7 @@ Vue.prototype.goTo = function(address){
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
