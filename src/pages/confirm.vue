@@ -3,7 +3,7 @@
       <van-nav-bar
         title="确认订单"
         left-arrow
-        fixed="true"
+        :fixed="true"
         @click-left="onClickLeft"
         style="border-bottom: 1px solid #eee"
       />
