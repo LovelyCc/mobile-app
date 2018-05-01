@@ -1,6 +1,12 @@
 <template>
-	<div>
-    <h1>订单</h1>
+	<div style="background-color: #eee;">
+    <van-nav-bar
+      title="订单"
+      left-arrow
+      :fixed="true"
+      @click-left="onClickLeft"
+      style="border-bottom: 1px solid #eee"
+    />
 	</div>
 </template>
 
@@ -11,7 +17,12 @@
 			return {
 
 			}
-		}
+		},
+    methods: {
+      onClickLeft() {
+        this.$router.goBack();
+      },
+    }
 	}
 </script>
 

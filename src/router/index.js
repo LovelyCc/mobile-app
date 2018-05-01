@@ -54,6 +54,11 @@ export default new Router({
       path: '/confirm',
       name: 'Confirm',
       component: Confirm
+    },
+    {
+      path: '/orderList',
+      name: 'Orderlist',
+      component: Orderlist
     }
   ]
 });

@@ -1,11 +1,8 @@
 <template>
 	<div>
-    <van-tabbar style="background-color: #eee; z-index: 1" v-model="active">
+    <van-tabbar style="background-color: #fff; z-index: 1" v-model="active">
       <van-tabbar-item icon="shop" to="/commend">
         <span>推荐</span>
-        <template slot="icon" slot-scope="props">
-          <img :src="props.active ? icon.active : icon.normal" />
-        </template>
       </van-tabbar-item>
       <van-tabbar-item icon="chat" to="/menu">菜单</van-tabbar-item>
       <van-tabbar-item icon="records" to="/user">我的</van-tabbar-item>

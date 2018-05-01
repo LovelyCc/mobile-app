@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="background-color: #fff;">
     <div class="top">推荐</div>
     <p class="title">
       <img src="../assets/tuijian.png" alt="">
@@ -136,6 +136,7 @@
     height: 50px;
     line-height: 50px;
     text-align: center;
+    background-color: #fff;
     img{
       vertical-align: middle;
       width: 40px;
@@ -146,6 +147,7 @@
   .tuijian-menu{
     border: 1px solid #ccc;
     padding: 0 0 10px 0;
+    background-color: #fff;
     img{
       width: 100%;
     }
