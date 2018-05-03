@@ -1,6 +1,7 @@
 <template>
   <div id="login">
 		<div class="container">
+      <h3 @click="photos()">拍照</h3>
 			<van-cell-group>
 			  <van-field
 			    v-model="username"
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-
+  import html_plus from '../plusready.js'
   import $http from '../axios/http.js'
 	export default{
 		name: 'login',
@@ -38,6 +39,11 @@
 			}
 		},
 		methods: {
+		  photos() {
+        var img_path = html_plus.captureImage();
+        html_plus.uploadImg(img_path);
+      },
+
 			checkLogin() {
 				if(this.username == '' || this.password == ''){
 					this.$toast('用户名和密码不能为空~');

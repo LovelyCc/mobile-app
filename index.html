@@ -25,5 +25,17 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script type="text/javascript" charset="utf-8">
+      //监听“plusready”事件
+      document.addEventListener("plusready",plusReady,false);
+
+      // H5 plus事件处理
+      function plusReady(){
+        var ws = plus.webview.currentWebview();
+        // 5+ API code
+        // ......
+      }
+
+    </script>
   </body>
 </html>
