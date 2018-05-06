@@ -51,7 +51,7 @@
 
 <script>
   import {mapState,mapGetters,mapMutations} from 'vuex'
-
+  import $http from '../axios/http'
   export default {
     name: "List",
     data() {
@@ -137,10 +137,25 @@
         this.$router.push("/confirm")
       },
 
+      // 获取菜单
+      getMenu() {
+        $http({
+          url: 'restaurant/menu/all',
+          method: 'get'
+        }).then(res => {
+          console.log(res,"菜单")
+        },err => {
+          console.log(err, "菜单")
+        })
+      },
+
       ...mapMutations(['addToCart', 'updateCart', 'reduceCart'])
     },
     computed: {
       ...mapGetters(['totalPrice', 'totalNum'])
+    },
+    mounted() {
+      this.getMenu()
     }
   };
 </script>

@@ -23,11 +23,10 @@ const httpServer = (opts, data) => {
 //   http默认配置
     method: opts.method,
     // baseURL: process.env.NODE_ENV === 'development' ? 'https://sp0.baidu.com' : `http://${window.location.hostname}:8005`,
-    baseURL: '/api',
+    baseURL: 'http://192.168.43.125:8080',
     url: opts.url,
     header: {
-      AccessKeyID: 'LTAIrziJraDNQs3D',
-      AccessKeySecret: 'PjwfZ9n5DR0dG2dIcTwaI1CVtFz0uX'
+
     },
     timeout: 10000,
     params: Object.assign(Public, sendData(data)),

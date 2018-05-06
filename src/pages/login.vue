@@ -49,18 +49,20 @@
 					this.$toast('用户名和密码不能为空~');
 				}else {
 					this.loading = true;
-					setTimeout(() => {
+					/*setTimeout(() => {
 						this.loading = false;
 						if(this.username == 'hrrm' && this.password == '123456'){
 							this.login();
 						}else{
 							this.$toast('用户名或密码不正确');
 						}
-					},1000)
+					},1000)*/
+
+					this.login()
 				}
 			},
 			login() {
-				this.Axios.post("http://api/login", {
+				/*this.Axios.post("http://api/login", {
 					username: this.username,
 					password: this.password
 				}).then((res) => {
@@ -69,40 +71,25 @@
 					this.goTo("/commend")
 				},(err) => {
 					console.log(err)
-				})
-			}
+				})*/
+				$http({
+          url: '/restaurant/user/login',
+          method: 'get'
+        },{
+          userName: this.username,
+          password: this.password
+        }).then(res => {
+          console.log(res,"登录")
+          this.loading = false;
+          localStorage.setItem("wrct-username", this.username)
+          this.goTo("/commend")
+        },err => {
+          console.log(err, "登录")
+          this.loading = false;
+          this.$toast('网络出现错误~');
+        })
 
-		// 	login() {
-		// 	  /*$http({
-      //     method: 'post',
-      //     url: '/face/attribute'
-      //   },{
-      //     type: 0,
-      //     image_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=149333267,162203446&fm=200&gp=0.jpg'
-      //   }).then(res => {
-      //     console.log(res);
-      //   },err => {
-      //     console.log(err)
-      //   })*/
-      //
-      //
-		// 	  this.Axios({
-      //     method: 'post',
-      //     url: '/api/face/attribute',
-      //     data: {
-      //       type: 0,
-      //       image_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=149333267,162203446&fm=200&gp=0.jpg'
-      //     },
-      //     header: {
-      //       AccessKeyID: 'LTAIrziJraDNQs3D',
-      //       AccessKeySecret: 'PjwfZ9n5DR0dG2dIcTwaI1CVtFz0uX'
-      //     }
-      //   }).then(res => {
-      //     console.log(res)
-      //   }, err => {
-      //     console.log(err);
-      //   })
-      // }
+			}
 		}
 	}
 </script>

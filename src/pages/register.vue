@@ -88,8 +88,19 @@
       },
 
       clickSubmit() {
+
         if(this.checkUsername() && this.checkpwd() && this.checkRePwd()) {
-          console.log("注册")
+          $http({
+            url: '/restaurant/user/register',
+            method: 'get'
+          },{
+            userName: this.username,
+            password: this.password
+          }).then(res => {
+            console.log(res,"zhuce")
+          },err => {
+            console.log(err)
+          })
         }else {
 
         }
