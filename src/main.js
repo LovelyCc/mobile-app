@@ -4,15 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 import router from './router'
-import Vant from 'vant'
-import 'vant/lib/vant-css/index.css'
 import axios from 'axios'
 import './mock'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import store from './store/index'
 
 Vue.config.productionTip = false
-Vue.use(Vant)
 Vue.use(VueRouter)
 
 VueRouter.prototype.goBack = function () {

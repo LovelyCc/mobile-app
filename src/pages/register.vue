@@ -16,6 +16,15 @@
           type="password"
           placeholder="请再次输入密码"
         />
+        <van-field
+          center
+          v-model="facePath"
+          placeholder="点击右侧按钮获取人脸图像"
+          icon="clear"
+          disabled="true"
+        >
+          <van-button slot="button" size="small">获取人脸</van-button>
+        </van-field>
       </van-cell-group>
       <van-button bottom-action style="margin-top: 20px; height: 45px; line-height: 45px;"
                   size="large"
@@ -30,7 +39,7 @@
 </template>
 
 <script>
-
+  import { Cell, CellGroup, Field, Button } from 'vant'
   import $http from '../axios/http.js'
   export default{
     name: 'register',
@@ -39,8 +48,15 @@
         username: '',
         password: '',
         rePwd: '',
-        loading: false
+        loading: false,
+        facePath: ''
       }
+    },
+    components:{
+      [Button.name]: Button,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup,
+      [Field.name]: Field
     },
     methods: {
       checkUsername() {
@@ -127,7 +143,7 @@
       margin: 45% auto 0;
       p{
         margin: 10px auto 0;
-        color: #fff;
+        color: #333;
         font-size: 13px;
         .register{
           float: right;
