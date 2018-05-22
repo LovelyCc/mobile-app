@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import { Tabbar, TabbarItem } from 'vant'
 	export default {
 		name: "home",
 		data() {
@@ -26,7 +27,30 @@
           active: '//img.yzcdn.cn/2.png'
         }
 			}
-		}
+		},
+    components:{
+      [Tabbar.name]: Tabbar,
+      [TabbarItem.name]: TabbarItem
+    },
+    methods: {
+		  // 判断当前路由
+      reComputed() {
+        switch (this.$router.history.current.fullPath) {
+          case '/user':
+            this.active = 2
+                break;
+          case '/menu':
+            this.active = 1
+                break;
+          case '/commend':
+            this.active = 0
+                break;
+        }
+      }
+    },
+    mounted() {
+		  this.reComputed()
+    }
 	}
 </script>
 

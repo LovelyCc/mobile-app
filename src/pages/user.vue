@@ -1,5 +1,5 @@
 <template>
-	<div style="background-color: #eee; height: 100%;">
+	<div style="background-color: #efefef; height: 100%;">
     <div class="header">
       <div class="touxiang">
         <img src="../assets/touxiang.jpg" alt="">
@@ -14,13 +14,17 @@
 </template>
 
 <script>
+  import { Icon } from 'vant'
 	export default {
 		name: "user",
 		data() {
 			return {
 
 			}
-		}
+		},
+    components: {
+		  [Icon.name]: Icon
+    }
 	}
 </script>
 

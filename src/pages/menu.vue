@@ -88,19 +88,22 @@
             name: '娃哈哈',
             path: require('../assets/wahaha.jpg'),
             price: '1.5',
-            num: 0
+            num: 0,
+            id: 1
           },
           {
             name: '雪碧',
             path: require('../assets/xuebi.jpg'),
             price: '3',
-            num: 0
+            num: 0,
+            id: 2
           },
           {
             name: '水晶葡萄',
             path: require('../assets/aaa.jpg'),
             price: '5',
-            num: 0
+            num: 0,
+            id: 3
           }
         ]
       }
@@ -138,9 +141,14 @@
       },
 
       // 获取菜单
+<<<<<<< HEAD
       getMenu(n) {
         this.active = n;
         /*$http({
+=======
+      getMenuAll() {
+        $http({
+>>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
           url: 'restaurant/menu/all',
           method: 'get'
         }).then(res => {
@@ -150,13 +158,32 @@
         })*/
       },
 
+      // 保证购物车中的菜和菜单中显示的数量一致
+      confirmNum() {
+        this.cartList.forEach((item) => {
+          this.menu.forEach((item1) => {
+            if(item.id == item1.id) {
+              item1.num = item.num
+            }
+          })
+        })
+      },
+
       ...mapMutations(['addToCart', 'updateCart', 'reduceCart'])
     },
     computed: {
-      ...mapGetters(['totalPrice', 'totalNum'])
+      ...mapGetters(['totalPrice', 'totalNum']),
+      ...mapState({
+        cartList: state=>state.goodsList
+      })
     },
     mounted() {
+<<<<<<< HEAD
       // this.getMenu()
+=======
+      // this.getMenuAll()
+      this.confirmNum()
+>>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
     }
   };
 </script>
@@ -168,8 +195,9 @@
     position: fixed;
     top: 0;
     z-index: 1;
-    border-bottom: 1px solid #eee;
-    background-color: #fff;
+    /*border-bottom: 1px solid #eee;*/
+    background-color: #f50;
+    color: #fff;
     text-align: center;
     line-height: 44px;
   }
@@ -185,7 +213,7 @@
     top: 0;
     z-index: 0;
     background-color: #f7f7f7;
-    padding-top: 46px;
+    padding-top: 44px;
     ul{
       list-style: none;
       text-align: center;

@@ -5,7 +5,7 @@
         left-arrow
         :fixed="true"
         @click-left="onClickLeft"
-        style="border-bottom: 1px solid #eee"
+        style="border-bottom: 1px solid #eee; background-color: #f50;color: #fff;"
       />
       <div class="footer">
         <div class="button">提交订单</div>
@@ -43,12 +43,18 @@
 
 <script>
   import {mapState,mapGetters,mapMutations} from 'vuex'
+  import { NavBar,CellSwipe,Dialog} from 'vant'
     export default {
         name: "conform",
       data() {
         return {
           delIndex: ''
         }
+      },
+      components:{
+        [NavBar.name]: NavBar,
+        [CellSwipe.name]: CellSwipe,
+        [Dialog.name]: Dialog
       },
       methods: {
         onClickLeft() {

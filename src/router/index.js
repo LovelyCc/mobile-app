@@ -8,6 +8,7 @@ import Menu from '@/pages/menu'
 import Orderlist from '@/pages/orderList'
 import User from '@/pages/user'
 import Confirm from '@/pages/confirm'
+import Orderdetail from '@/pages/orderDetail'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/orderList',
       name: 'Orderlist',
       component: Orderlist
+    },
+    {
+      path: '/orderDetail',
+      name: 'Orderdetail',
+      component: Orderdetail
     }
   ]
 });
