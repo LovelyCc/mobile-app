@@ -138,15 +138,16 @@
       },
 
       // 获取菜单
-      getMenu() {
-        $http({
+      getMenu(n) {
+        this.active = n;
+        /*$http({
           url: 'restaurant/menu/all',
           method: 'get'
         }).then(res => {
           console.log(res,"菜单")
         },err => {
           console.log(err, "菜单")
-        })
+        })*/
       },
 
       ...mapMutations(['addToCart', 'updateCart', 'reduceCart'])
@@ -155,7 +156,7 @@
       ...mapGetters(['totalPrice', 'totalNum'])
     },
     mounted() {
-      this.getMenu()
+      // this.getMenu()
     }
   };
 </script>

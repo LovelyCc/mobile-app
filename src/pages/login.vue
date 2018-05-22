@@ -1,7 +1,7 @@
 <template>
   <div id="login">
 		<div class="container">
-      <h3 @click="photos()">拍照</h3>
+      <h3 @click="photos()">摄像头</h3>
 			<van-cell-group>
 			  <van-field
 			    v-model="username"
@@ -49,20 +49,20 @@
 					this.$toast('用户名和密码不能为空~');
 				}else {
 					this.loading = true;
-					/*setTimeout(() => {
+					setTimeout(() => {
 						this.loading = false;
 						if(this.username == 'hrrm' && this.password == '123456'){
 							this.login();
 						}else{
 							this.$toast('用户名或密码不正确');
 						}
-					},1000)*/
+					},1000)
 
-					this.login()
+					/*this.login()*/
 				}
 			},
 			login() {
-				/*this.Axios.post("http://api/login", {
+				this.Axios.post("http://api/login", {
 					username: this.username,
 					password: this.password
 				}).then((res) => {
@@ -71,8 +71,8 @@
 					this.goTo("/commend")
 				},(err) => {
 					console.log(err)
-				})*/
-				$http({
+				})
+				/*$http({
           url: '/restaurant/user/login',
           method: 'get'
         },{
@@ -87,7 +87,7 @@
           console.log(err, "登录")
           this.loading = false;
           this.$toast('网络出现错误~');
-        })
+        })*/
 
 			}
 		}
