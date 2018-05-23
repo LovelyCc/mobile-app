@@ -10,15 +10,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      /*'/api': {
-        target: 'https://dtplus-cn-shanghai.data.aliyuncs.com/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api'
-        }
-      }*/
-    },
+    proxyTable: {},
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

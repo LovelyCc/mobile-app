@@ -49,7 +49,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-
     // 总价
     totalPrice: state => {
       let sum = 0;

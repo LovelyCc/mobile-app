@@ -31,7 +31,7 @@
     <van-popup v-model="show">
       <p class="title">评价</p>
       <van-rate v-model="value" :size="22" color="#f50" />
-      <van-button type="primary" bottom-action class="submit" @click="submit">按钮</van-button>
+      <van-button type="primary" bottom-action class="submit" @click="submit">确定</van-button>
     </van-popup>
 
 	</div>

@@ -7,97 +7,18 @@
     </p>
     <div style="margin-bottom: 50px;">
       <div class="list">
-        <div class="item" v-for="(item,index) in list">
+        <div class="item" v-for="(item,index) in list" @click="goMenu(item.id)">
           <img :src="item.img" alt="">
           <p class="tuijian-title">{{item.name}}</p>
           <p class="price">￥<span>{{item.price}}</span></p>
         </div>
       </div>
-      <!--<van-row style="margin-bottom: 15px;" class="list">
-        <van-col offset="1" span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-        <van-col span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-      </van-row>
-      <van-row style="margin-bottom: 15px">
-        <van-col offset="1" span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-        <van-col span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-      </van-row>
-      <van-row style="margin-bottom: 15px">
-        <van-col offset="1" span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-        <van-col span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-      </van-row>
-      <van-row style="margin-bottom: 15px">
-        <van-col offset="1" span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-        <van-col span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-      </van-row>
-      <van-row style="margin-bottom: 15px">
-        <van-col offset="1" span="11">
-            <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-        <van-col span="11">
-          <div class="tuijian-menu">
-            <img src="../assets/timg.jpg" alt="">
-            <p class="tuijian-title">扬州炒饭</p>
-            <p class="price">￥<span>38.8</span></p>
-          </div>
-        </van-col>
-      </van-row>-->
     </div>
 	</div>
 </template>
 
 <script>
+  import $http from '../axios/http'
 	export default {
 		name: "commend",
 		data() {
@@ -158,22 +79,29 @@
 			}
 		},
     methods: {
+		  // 获取推荐列表
 		  getMenu() {
-        this.Axios.get('/api/restapi/shopping/v2/menu',{
-          params: {
-            "restaurant_id": "161277900",
-            "terminal": 'web'
-          }
+		    $http({
+          url: '/api/restapi/shopping/v2/menu',
+          method: 'get'
+        },{
+          "restaurant_id": "161277900",
+          "terminal": 'web'
+        }).then((res) => {
+          console.log(res)
+          this.goodsList = res.data
+        },(err) => {
+          console.log(err)
         })
-          .then(res=> {
-            console.log(res)
-          },err => {
-            console.log(err)
-          })
+      },
+
+      // 点击跳转到菜单
+      goMenu(id) {
+		    this.$route.push({path: '/menu', query: {footId: id}})
       }
     },
     mounted() {
-      // this.getMenu();
+      this.getMenu();
     }
 	}
 </script>

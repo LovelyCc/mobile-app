@@ -105,7 +105,11 @@
             num: 0,
             id: 3
           }
-        ]
+        ],
+        cate1: {},
+        cate2: {},
+        cate3: {},
+        cate4: {}
       }
     },
     methods: {
@@ -141,21 +145,27 @@
       },
 
       // 获取菜单
-<<<<<<< HEAD
-      getMenu(n) {
-        this.active = n;
-        /*$http({
-=======
       getMenuAll() {
         $http({
->>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
           url: 'restaurant/menu/all',
           method: 'get'
         }).then(res => {
-          console.log(res,"菜单")
+          console.log(res,"菜单");
+          res.data.forEach((item,index,self) => {
+            if(item.cateId == 1) {
+              this.cate1.push(item)
+            }else if(item.cateId == 2) {
+              this.cate2.push(item)
+            }else if(item.cateId == 3) {
+              this.cate3.push(item)
+            }else {
+              this.cate4.push(item)
+            }
+            this.menu = cate1;
+          })
         },err => {
           console.log(err, "菜单")
-        })*/
+        })
       },
 
       // 保证购物车中的菜和菜单中显示的数量一致
@@ -178,12 +188,8 @@
       })
     },
     mounted() {
-<<<<<<< HEAD
-      // this.getMenu()
-=======
       // this.getMenuAll()
       this.confirmNum()
->>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
     }
   };
 </script>

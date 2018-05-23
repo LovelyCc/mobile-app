@@ -1,26 +1,6 @@
 <template>
   <div id="login">
 		<div class="container">
-<<<<<<< HEAD
-      <h3 @click="photos()">摄像头</h3>
-			<van-cell-group>
-			  <van-field
-			    v-model="username"
-			    placeholder="请输入用户名"
-			  />
-			  <van-field
-			    v-model="password"
-			    type="password"
-			    placeholder="请输入密码"
-			  />
-			</van-cell-group>
-      <van-button bottom-action style="margin-top: 20px; height: 45px; line-height: 45px;"
-                  size="large"
-                  type="primary"
-                  :loading="loading"
-                  @click="checkLogin()">登陆</van-button>
-=======
-
       <div v-show="!isFace">
         <van-cell-group>
           <van-field
@@ -43,7 +23,6 @@
         <!--<h3 @click="photos()">拍照</h3>-->
         <img src="../assets/face.png" @click="photos()" alt="">
       </div>
->>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
 			<p>
         <span @click="isFace = !isFace">
           <span v-show="isFace">用户名密码登录</span>
@@ -101,18 +80,7 @@
 				}
 			},
 			login() {
-				this.Axios.post("http://api/login", {
-					username: this.username,
-					password: this.password
-				}).then((res) => {
-					console.log(res);
-					localStorage.setItem("wrct-username",res.data.username);
-					this.goTo("/commend")
-				},(err) => {
-					console.log(err)
-				})
-<<<<<<< HEAD
-				/*$http({
+				$http({
           url: '/restaurant/user/login',
           method: 'get'
         },{
@@ -127,26 +95,7 @@
           console.log(err, "登录")
           this.loading = false;
           this.$toast('网络出现错误~');
-        })*/
-=======
-			// 	$http({
-        //   url: '/restaurant/user/login',
-        //   method: 'get'
-        // },{
-        //   userName: this.username,
-        //   password: this.password
-        // }).then(res => {
-        //   console.log(res,"登录")
-        //   this.loading = false;
-        //   localStorage.setItem("wrct-username", this.username)
-        //   this.goTo("/commend")
-        // },err => {
-        //   console.log(err, "登录")
-        //   this.loading = false;
-        //   this.$toast('网络出现错误~');
-        // })
->>>>>>> cffee94c1be7f890943a9483b95055663ed5261a
-
+        })
 			}
 		}
 	}

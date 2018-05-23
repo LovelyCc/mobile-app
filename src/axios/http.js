@@ -1,12 +1,9 @@
 import axios from 'axios'
-import qs from 'qs'
 
 const httpServer = (opts, data) => {
 
   // 公共参数
-  let Public = {
-
-  };
+  let Public = {};
 
   //  发送的数据初始化
   function sendData (obj) {
@@ -16,22 +13,17 @@ const httpServer = (opts, data) => {
       }
     }
     return obj || {}
-  };
-
+  }
 
   let httpDefaultOpts = {
 //   http默认配置
     method: opts.method,
-    // baseURL: process.env.NODE_ENV === 'development' ? 'https://sp0.baidu.com' : `http://${window.location.hostname}:8005`,
     baseURL: 'http://192.168.43.125:8080',
     url: opts.url,
-    header: {
-
-    },
+    header: {},
     timeout: 10000,
     params: Object.assign(Public, sendData(data)),
     data: Object.assign(Public, data),
-
   };
   if (opts.method === 'get') {
     delete httpDefaultOpts.data
