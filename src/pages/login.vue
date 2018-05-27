@@ -59,7 +59,7 @@
 		  photos() {
         let img_path = html_plus.captureImage();
         let res = html_plus.uploadImg(img_path, {
-          url: 'http://192.168.43.125:8080/restaurant/user/login'
+          url: 'http://172.20.10.9:8080/restaurant/user/login'
         });
         if(res.status < 85) {
           this.$toast('人脸不匹配，可以重新登录或输入用户名密码登录~');

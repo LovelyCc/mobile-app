@@ -108,7 +108,17 @@
 
       // 切换分类
       getMenu(index) {
-        this.active = index
+        this.active = index;
+        if(index == 0) {
+          this.menu = this.cate1
+        }else if(index == 1) {
+          this.menu = this.cate2
+        }else if(index == 2) {
+          this.menu = this.cate3
+        }else {
+          this.menu = this.cate4
+        }
+        this.confirmNum();
       },
 
       // 点击购物车图片
@@ -200,7 +210,7 @@
       })
     },
     mounted() {
-      this.getMenuAll()
+      this.getMenuAll();
       this.confirmNum();
     }
   };
@@ -213,7 +223,6 @@
     position: fixed;
     top: 0;
     z-index: 1;
-    /*border-bottom: 1px solid #eee;*/
     background-color: #f50;
     color: #fff;
     text-align: center;
@@ -227,7 +236,7 @@
     align-content:stretch;
     width: 25%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 0;
     background-color: #f7f7f7;

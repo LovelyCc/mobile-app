@@ -88,7 +88,7 @@
           second = "" + "0" + second
         }
 
-        var res = year + '-' + month + '-' + day + " hours" + ':' + min + ':' + second;
+        var res = year + '-' + month + '-' + day + " " + hours + ':' + min + ':' + second;
         return res
       },
 
@@ -98,11 +98,11 @@
           url: '/restaurant/order/orderDetail',
           method: 'post'
         },{
-          id: this.$route.query.id
+          orderId: this.$route.query.id
         }).then((res) => {
           console.log(res, "orderdetail")
           this.list = res.data[1].orderDetail;
-          this.money = res.data.detail.money;
+          this.money = res.data[0].orders.price;
           this.orderTime = this.initTime(res.data[0].orders.orderTime);
           this.orderNum = res.data[0].orders.orderNum;
         },(err) => {

@@ -35,21 +35,22 @@
     methods: {
 		  // 判断当前路由
       reComputed() {
-        switch (this.$router.history.current.fullPath) {
-          case '/user':
-            this.active = 2
-                break;
-          case '/menu':
-            this.active = 1
-                break;
-          case '/commend':
-            this.active = 0
-                break;
+        let str = this.$router.history.current.fullPath;
+        if(str.indexOf('user') != -1) {
+          this.active = 2
+        }else if(str.indexOf('menu') != -1) {
+          this.active = 1
+        }else if(str.indexOf('commend') != -1) {
+          this.active = 0
         }
       }
     },
     mounted() {
 		  this.reComputed()
+    },
+
+    updated() {
+      this.reComputed()
     }
 	}
 </script>

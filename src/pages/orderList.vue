@@ -80,16 +80,16 @@
         }).then((res) => {
           console.log(res,"order")
           let arr = []
-          res.data.orders.forEach((item, index, self) => {
-            let obj = {};
-            obj.id = item.id;
-            obj.money = item.price;
-            obj.time = this.initTime(item.orderTime);
-            obj.isEvaluate = item.commented;
-            obj.image = res.data.menus[index].picPath;
-            obj.food = res.data.menus[index].name;
-            arr.push(obj);
-          })
+         res.data.orders.forEach((item, index, self) => {
+          let obj = {};
+          obj.id = item.id;
+          obj.money = item.price;
+          obj.time = this.initTime(item.orderTime);
+          obj.isEvaluate = item.commented;
+          obj.image = res.data.menus[index].picPath;
+          obj.food = res.data.menus[index].name;
+          arr.push(obj);
+        })
           this.orderList = arr;
         },(err) => {
           console.log(err, 'orderList')

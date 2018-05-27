@@ -120,7 +120,7 @@
           // })
           var img_path = html_plus.captureImage();
           var res = html_plus.uploadImg(img_path,{
-            url: 'http://192.168.43.125:8080/restaurant/user/register',
+            url: 'http://172.20.10.9:8080/restaurant/user/register',
             username: this.username,
             password: this.password
           })

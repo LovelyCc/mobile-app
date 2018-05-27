@@ -21,7 +21,7 @@
                         class="item"
                         :on-close="onClose">
           <div class="img-box">
-            <img :src='item.path' alt="">
+            <img :src='item.picPath' alt="">
           </div>
           <div style="float: right; width: 75%; height: 100%; padding: 10px 5px;">
             <h3>{{item.name}} <span>￥{{item.price}}</span></h3>
@@ -78,7 +78,7 @@
           });
 
           $http({
-            url: '/restaurant/prder.add',
+            url: '/restaurant/order/add',
             method: 'post'
           }, {
             userId: localStorage.getItem("wrct_userid"),

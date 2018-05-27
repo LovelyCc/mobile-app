@@ -23,58 +23,7 @@
 		name: "commend",
 		data() {
 			return {
-			  list: [
-          {
-            name: '上汤小菠菜',
-            img: 'https://fuss10.elemecdn.com/c/73/bf86d0f695a8ed204664d76df2b0cjpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '22'
-          },
-          {
-            name: '荷塘小炒',
-            img: 'https://fuss10.elemecdn.com/e/62/e080f9cca1e9324c9d44bf129d004jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '24'
-          },
-          {
-            name: '宫保鸡丁',
-            img: 'https://fuss10.elemecdn.com/2/ef/189e556345c8f1231049ef85bff8cjpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '26'
-          },
-          {
-            name: '五香牛肉',
-            img: 'https://fuss10.elemecdn.com/b/d6/8c1dbd77da592651438cace80b48ejpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '30'
-          },
-          {
-            name: '淮南牛肉锅',
-            img: 'https://fuss10.elemecdn.com/2/0a/8442341ebb4c884b8579b941f1adajpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '46'
-          },
-          {
-            name: '沙律牛排',
-            img: 'https://fuss10.elemecdn.com/0/a1/cc67e4d769591a87d39f0bd773169jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '32'
-          },
-          {
-            name: '川香红烧牛肉',
-            img: 'https://fuss10.elemecdn.com/8/94/0fa13aa93545b09c8f03854b040a2jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '46'
-          },
-          {
-            name: '上汤小菠菜',
-            img: 'https://fuss10.elemecdn.com/c/73/bf86d0f695a8ed204664d76df2b0cjpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '22'
-          },
-          {
-            name: '荷塘小炒',
-            img: 'https://fuss10.elemecdn.com/e/62/e080f9cca1e9324c9d44bf129d004jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '24'
-          },
-          {
-            name: '清炒虾仁',
-            img: 'https://fuss10.elemecdn.com/0/e4/25ada405c9c4188e40a2a08a9dc4bjpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/85',
-            price: '68'
-          }
-        ]
+			  list: []
 
 			}
 		},
@@ -88,7 +37,7 @@
           userId: localStorage.getItem("wrct_userid")
         }).then((res) => {
           console.log(res, "推荐");
-          this.goodsList = res.data.menus;
+          this.list = res.data.menus;
         },(err) => {
           console.log(err)
         })
