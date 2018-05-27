@@ -20,7 +20,6 @@
                     @click="checkLogin()">登陆</van-button>
       </div>
       <div v-show="isFace" class="face">
-        <!--<h3 @click="photos()">拍照</h3>-->
         <img src="../assets/face.png" @click="photos()" alt="">
       </div>
 			<p>
@@ -58,8 +57,18 @@
     },
 		methods: {
 		  photos() {
-        var img_path = html_plus.captureImage();
-        html_plus.uploadImg(img_path);
+        let img_path = html_plus.captureImage();
+        let res = html_plus.uploadImg(img_path, {
+          url: 'http://192.168.43.125:8080/restaurant/user/login'
+        });
+        if(res.status < 85) {
+          this.$toast('人脸不匹配，可以重新登录或输入用户名密码登录~');
+        } else {
+
+          localStorage.setItem("wrct_username", res.userName);
+          localStorage.setItem("wrct_userid", res.userId);
+          this.goTo("/commend");
+        }
       },
 
 			checkLogin() {
@@ -67,30 +76,27 @@
 					this.$toast('用户名和密码不能为空~');
 				}else {
 					this.loading = true;
-					setTimeout(() => {
-						this.loading = false;
-						if(this.username == 'hrrm' && this.password == '123456'){
-							this.login();
-						}else{
-							this.$toast('用户名或密码不正确');
-						}
-					},1000)
-
-					/*this.login()*/
+          // this.goTo("/commend")
+					this.login();
 				}
 			},
 			login() {
 				$http({
           url: '/restaurant/user/login',
-          method: 'get'
+          method: 'post'
         },{
           userName: this.username,
           password: this.password
         }).then(res => {
           console.log(res,"登录")
           this.loading = false;
-          localStorage.setItem("wrct-username", this.username)
-          this.goTo("/commend")
+          if(res.data.status == 0) {
+            localStorage.setItem("wrct_username", res.data.userName);
+            localStorage.setItem("wrct_userid", res.data.userId);
+            this.goTo("/commend")
+          }else {
+            this.$toast('用户名或密码错误~');
+          }
         },err => {
           console.log(err, "登录")
           this.loading = false;

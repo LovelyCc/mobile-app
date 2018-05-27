@@ -18,12 +18,12 @@
           <van-icon name="arrow" class="icon" @click="goDetails(item.id)"></van-icon>
           </div>
           <div class="detail">
-            <span class="food">{{item.food}}等{{item.num}}件商品</span>
+            <span class="food">{{item.food}}等商品</span>
             <span class="money">￥{{item.money}}</span>
           </div>
           <div class="btn">
-            <button v-if="item.isEvaluate" @click="showModel(item.id)">去评价</button>
-            <span class="tip" v-if="!item.isEvaluate">已评价</span>
+            <button v-if="!item.isEvaluate" @click="showModel(item.id)">去评价</button>
+            <span class="tip" v-if="item.isEvaluate">已评价</span>
           </div>
         </div>
       </div>
@@ -73,16 +73,56 @@
       // 获取订单列表
       getOrder() {
         $http({
-          url: 'http://api/getOrderList',
-          method: 'GET'
+          url: '/restaurant/order/all',
+          method: 'post'
         },{
-          userId: 'hrrm'
+          userId: localStorage.getItem("wrct_userid")
         }).then((res) => {
           console.log(res,"order")
-          this.orderList = res.data.order
+          let arr = []
+          res.data.orders.forEach((item, index, self) => {
+            let obj = {};
+            obj.id = item.id;
+            obj.money = item.price;
+            obj.time = this.initTime(item.orderTime);
+            obj.isEvaluate = item.commented;
+            obj.image = res.data.menus[index].picPath;
+            obj.food = res.data.menus[index].name;
+            arr.push(obj);
+          })
+          this.orderList = arr;
         },(err) => {
-          console.log(err)
+          console.log(err, 'orderList')
         })
+      },
+
+      // 初始化时间
+      initTime(str) {
+        let time = new Date(str);
+        let year = time.getFullYear();
+        let month = time.getMonth() + 1;
+        let day = time.getDate();
+        let hours = time.getHours();
+        let min = time.getMinutes();
+        let second = time.getSeconds();
+        if(month < 10) {
+          month = "" + "0" + month
+        }
+        if(day < 10) {
+          day = "" + "0" + day
+        }
+        if(hours < 10) {
+          hours = "" + "0" + hours
+        }
+        if(min < 10) {
+          min = "" + "0" + min
+        }
+        if(second < 10) {
+          second = "" + "0" + second
+        }
+
+        var res = year + '-' + month + '-' + day + " hours" + ':' + min + ':' + second;
+        return res
       },
 
       // 点击评价弹出模态框
@@ -94,18 +134,18 @@
       // 点击评价
       submit() {
         $http({
-          url: 'http://api/evaluate',
+          url: '/restaurant/comment/add',
           method: 'POST'
         },{
           orderId: this.orderId,
-          value: this.value
+          content: this.value,
+          userId: localStorage.getItem("wrct_userid")
         }).then((res) => {
-          console.log(res,"resssss")
+          console.log(res,"评价")
           this.show = false;
-          if(res.data.data) {
+          if(res.data.status == 0) {
             Toast.success('评价成功');
-          }else{
-            Toast.fail('评价失败');
+            this.getOrder();
           }
         }, (err) => {
           console.log(err,"评价失败")

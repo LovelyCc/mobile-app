@@ -7,8 +7,8 @@
     </p>
     <div style="margin-bottom: 50px;">
       <div class="list">
-        <div class="item" v-for="(item,index) in list" @click="goMenu(item.id)">
-          <img :src="item.img" alt="">
+        <div class="item" v-for="(item,index) in list" @click="goMenu(item.id, item.category)">
+          <img :src="item.picPath" alt="">
           <p class="tuijian-title">{{item.name}}</p>
           <p class="price">￥<span>{{item.price}}</span></p>
         </div>
@@ -82,22 +82,21 @@
 		  // 获取推荐列表
 		  getMenu() {
 		    $http({
-          url: '/api/restapi/shopping/v2/menu',
-          method: 'get'
+          url: '/restaurant/menu/tuijian',
+          method: 'post'
         },{
-          "restaurant_id": "161277900",
-          "terminal": 'web'
+          userId: localStorage.getItem("wrct_userid")
         }).then((res) => {
-          console.log(res)
-          this.goodsList = res.data
+          console.log(res, "推荐");
+          this.goodsList = res.data.menus;
         },(err) => {
           console.log(err)
         })
       },
 
       // 点击跳转到菜单
-      goMenu(id) {
-		    this.$route.push({path: '/menu', query: {footId: id}})
+      goMenu(id,category) {
+		    this.$router.push({path: '/menu', query: {id: id, category: category}})
       }
     },
     mounted() {

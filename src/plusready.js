@@ -26,19 +26,28 @@ const html_plus = {
     );
   },
 
-  uploadImg(path) {
-    var task = plus.uploader.createUpload( "", {}, function ( t, status ) {
+  task: null,
+  res: '',
+
+  onStateChanged(upload, status) {
+    if ( upload.state == 4 && status == 200 ) {
       // 上传完成
-      if ( status == 200 ) {
-        alert( "Upload success: " + t.url );
-      } else {
-        alert( "Upload failed: " + status );
-      }
-    });
-    task.addFile( path, {key:"img"} );
-    // task.addData( "string_key", "string_value" );
-    //task.addEventListener( "statechanged", onStateChanged, false );
-    task.start();
+      this.res = upload.responseText;
+    }
+  },
+
+  uploadImg(path,obj) {
+    this.task = plus.uploader.createUpload( obj.url);
+    this.task.addFile( path, {key:"file"} );
+    if(obj.params) {
+      this.task.addData( "userName", obj.params.username );
+      this.task.addData( "password", obj.params.password );
+    }
+    this.task.addEventListener( "statechanged", onStateChanged, false );
+    this.task.start();
+    setTimeout(() => {
+      return this.res;
+    }, 200)
   }
 }
 

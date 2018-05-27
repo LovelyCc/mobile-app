@@ -8,7 +8,7 @@
         style="border-bottom: 1px solid #eee; background-color: #f50;color: #fff;"
       />
       <div class="footer">
-        <div class="button">提交订单</div>
+        <div class="button" @click="submitOrder()">提交订单</div>
         <div class="money">
           合计<span> ￥ {{totalPrice}}</span>
         </div>
@@ -44,6 +44,7 @@
 <script>
   import {mapState,mapGetters,mapMutations} from 'vuex'
   import { NavBar,CellSwipe,Dialog} from 'vant'
+  import $http from '../axios/http.js'
     export default {
         name: "conform",
       data() {
@@ -63,6 +64,33 @@
 
         clickDel(index) {
           this.delIndex = index;
+        },
+
+        // 提交订单
+        submitOrder() {
+          let arr = [];
+          this.cartList.forEach((item,index,self) => {
+            let obj = {};
+            obj.menuId = item.id;
+            obj.price = item.price;
+            obj.num = item.num;
+            arr.push(obj)
+          });
+
+          $http({
+            url: '/restaurant/prder.add',
+            method: 'post'
+          }, {
+            userId: localStorage.getItem("wrct_userid"),
+            totalPrice: this.totalPrice,
+            orderDetails: arr
+          }).then((res) => {
+            this.clearCart();
+            this.goTo("/menu");
+          }, (err) => {
+            console.log(err,"提交订单");
+            this.$toast('网络错误，提交订单失败~');
+          })
         },
 
         // 点击删除
@@ -101,7 +129,7 @@
 
           }
         },
-        ...mapMutations(['addToCart', 'updateCart', 'reduceCart', 'reduceOne'])
+        ...mapMutations(['addToCart', 'updateCart', 'reduceCart', 'reduceOne', 'clearCart'])
       },
       computed: {
         ...mapGetters(['totalPrice', 'totalNum']),

@@ -14,8 +14,8 @@
         </div>
         <div class="item" v-for="(item,index) in list">
           <div class="item-left">
-            <img :src="item.img" alt="">
-            <span class="name">{{item.name}}</span>
+            <img :src="item.menu.picPath" alt="">
+            <span class="name">{{item.menu.name}}</span>
           </div>
           <div class="item-right">
             <span>x{{item.num}}</span>
@@ -63,19 +63,48 @@
         this.$router.goBack();
       },
 
+      // 初始化时间
+      initTime(str) {
+        let time = new Date(str);
+        let year = time.getFullYear();
+        let month = time.getMonth() + 1;
+        let day = time.getDate();
+        let hours = time.getHours();
+        let min = time.getMinutes();
+        let second = time.getSeconds();
+        if(month < 10) {
+          month = "" + "0" + month
+        }
+        if(day < 10) {
+          day = "" + "0" + day
+        }
+        if(hours < 10) {
+          hours = "" + "0" + hours
+        }
+        if(min < 10) {
+          min = "" + "0" + min
+        }
+        if(second < 10) {
+          second = "" + "0" + second
+        }
+
+        var res = year + '-' + month + '-' + day + " hours" + ':' + min + ':' + second;
+        return res
+      },
+
       // 获取订单详情
       getDetail() {
         $http({
-          url: 'http://api/getDetails',
-          method: 'GET'
+          url: '/restaurant/order/orderDetail',
+          method: 'post'
         },{
           id: this.$route.query.id
         }).then((res) => {
-          console.log(res)
-          this.list = res.data.detail.list;
+          console.log(res, "orderdetail")
+          this.list = res.data[1].orderDetail;
           this.money = res.data.detail.money;
-          this.orderTime = res.data.detail.time;
-          this.orderNum = res.data.detail.orderNum;
+          this.orderTime = this.initTime(res.data[0].orders.orderTime);
+          this.orderNum = res.data[0].orders.orderNum;
         },(err) => {
           console.log(err)
         })

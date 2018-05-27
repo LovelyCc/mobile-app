@@ -12,7 +12,7 @@
       <div style="position: relative;float: right; width: 75%">
         <div v-for="(item, index) in menu" class="item">
           <div class="img-box">
-            <img :src='item.path' alt="">
+            <img :src='item.picPath' alt="">
           </div>
           <div style="float: right; width: 75%; height: 100%; padding: 10px 5px;">
             <h3>{{item.name}}</h3>
@@ -59,29 +59,21 @@
         active: 0,
         classes: [
           {
-            name: '饮料/水',
+            name: '热菜',
             key: 0
           },
           {
-            name: '牛奶/酸奶',
+            name: '凉菜',
             key: 1
           },
           {
-            name: '热饮',
+            name: '饮品',
             key: 2
           },
           {
-            name: '休闲零食',
+            name: '汤类',
             key: 3
-          },
-          {
-            name: '方便面',
-            key: 4
-          },
-          {
-            name: '日用品',
-            key: 5
-          },
+          }
         ],
         menu: [
           {
@@ -106,10 +98,10 @@
             id: 3
           }
         ],
-        cate1: {},
-        cate2: {},
-        cate3: {},
-        cate4: {}
+        cate1: [],
+        cate2: [],
+        cate3: [],
+        cate4: []
       }
     },
     methods: {
@@ -151,17 +143,20 @@
           method: 'get'
         }).then(res => {
           console.log(res,"菜单");
-          res.data.forEach((item,index,self) => {
-            if(item.cateId == 1) {
-              this.cate1.push(item)
-            }else if(item.cateId == 2) {
-              this.cate2.push(item)
-            }else if(item.cateId == 3) {
-              this.cate3.push(item)
+          res.data.menus.forEach((item,index,self) => {
+            let items = item;
+            items.num = 0;
+            if(item.category == 1) {
+              this.cate1.push(items)
+            }else if(item.category == 2) {
+              this.cate2.push(items)
+            }else if(item.category == 3) {
+              this.cate3.push(items)
             }else {
-              this.cate4.push(item)
+              this.cate4.push(items)
             }
-            this.menu = cate1;
+            this.menu = this.cate1;
+            this.inFromTJ();
           })
         },err => {
           console.log(err, "菜单")
@@ -179,6 +174,23 @@
         })
       },
 
+      // 从推荐页面点击进入
+      inFromTJ() {
+        let foodId = this.$route.query.id;
+        let cateId = this.$route.query.category;
+        if(foodId && cateId) {
+          if(cateId == 1) {
+            this.menu = this.cate1;
+          }else if(cateId == 2) {
+            this.menu = this.cate2;
+          }else if(cateId == 3) {
+            this.menu = this.cate3;
+          }else {
+            this.menu = this.cate4;
+          }
+        }
+      },
+
       ...mapMutations(['addToCart', 'updateCart', 'reduceCart'])
     },
     computed: {
@@ -188,8 +200,8 @@
       })
     },
     mounted() {
-      // this.getMenuAll()
-      this.confirmNum()
+      this.getMenuAll()
+      this.confirmNum();
     }
   };
 </script>
