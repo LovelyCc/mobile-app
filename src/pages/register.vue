@@ -107,32 +107,22 @@
       clickSubmit() {
 
         if(this.checkUsername() && this.checkpwd() && this.checkRePwd()) {
-          // $http({
-          //   url: '/restaurant/user/register',
-          //   method: 'post'
-          // },{
-          //   userName: this.username,
-          //   password: this.password
-          // }).then(res => {
-          //   console.log(res,"zhuce")
-          // },err => {
-          //   console.log(err)
-          // })
           var img_path = html_plus.captureImage();
-          var res = html_plus.uploadImg(img_path,{
+          html_plus.uploadImg(img_path,{
             url: 'http://172.20.10.9:8080/restaurant/user/register',
             username: this.username,
             password: this.password
+          }).then((res) => {
+            console.log(res,"注册返回");
+            if(res.status == 0) {
+              this.$toast('注册成功，即将跳转到登录页');
+              setTimeout(() => {
+                this.goLogin();
+              }, 1000)
+            }else {
+              this.$toast('注册失败！');
+            }
           })
-          console.log(res,"注册返回");
-          if(res.status == 0) {
-            this.$toast('注册成功，即将跳转到登录页');
-            setTimeout(() => {
-              this.goLogin();
-            }, 1000)
-          }
-        }else {
-          this.$toast('注册失败！');
         }
       },
 

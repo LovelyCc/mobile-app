@@ -45,9 +45,14 @@ const html_plus = {
     }
     this.task.addEventListener( "statechanged", onStateChanged, false );
     this.task.start();
-    setTimeout(() => {
-      return this.res;
-    }, 200)
+
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        return resolve(this.res);
+      }, 200)
+    })
+    return promise
   }
 }
 
