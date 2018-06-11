@@ -18,7 +18,7 @@ const httpServer = (opts, data) => {
   let httpDefaultOpts = {
 //   http默认配置
     method: opts.method,
-    baseURL: 'http://172.20.10.9:8080',
+    baseURL: 'http://192.168.43.125:8080',
     url: opts.url,
     header: {},
     timeout: 10000,

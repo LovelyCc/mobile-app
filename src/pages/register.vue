@@ -16,15 +16,15 @@
           type="password"
           placeholder="请再次输入密码"
         />
-        <van-field
+       <!-- <van-field
           center
           v-model="facePath"
           placeholder="点击右侧按钮获取人脸图像"
           icon="clear"
           disabled="true"
         >
-          <van-button slot="button" size="small">获取人脸</van-button>
-        </van-field>
+          <van-button slot="button" @click="clickSubmit()" size="small">获取人脸</van-button>
+        </van-field>-->
       </van-cell-group>
       <van-button bottom-action style="margin-top: 20px; height: 45px; line-height: 45px;"
                   size="large"
@@ -105,24 +105,36 @@
       },
 
       clickSubmit() {
-
         if(this.checkUsername() && this.checkpwd() && this.checkRePwd()) {
-          var img_path = html_plus.captureImage();
-          html_plus.uploadImg(img_path,{
-            url: 'http://172.20.10.9:8080/restaurant/user/register',
-            username: this.username,
-            password: this.password
-          }).then((res) => {
-            console.log(res,"注册返回");
-            if(res.status == 0) {
-              this.$toast('注册成功，即将跳转到登录页');
-              setTimeout(() => {
-                this.goLogin();
-              }, 1000)
-            }else {
-              this.$toast('注册失败！');
-            }
-          })
+          this.loading = true;
+          html_plus.captureImage();
+
+          setTimeout(() => {
+            this.facePath = html_plus.img_path;
+            html_plus.uploadImg(this.facePath, {
+              url: 'http://192.168.43.125:8080/restaurant/user/register',
+              params: {
+                username: this.username,
+                password: this.password
+              }
+            })
+
+            setTimeout(() => {
+              let str = localStorage.getItem("wrct_reg");
+              console.log(str, "beforeJson")
+              let ress = JSON.parse(str)
+              console.log(ress,"JSON")
+              this.loading = false;
+              if(ress.status == 0) {
+                this.$toast('注册成功，即将跳转到登录页');
+                setTimeout(() => {
+                  this.goLogin();
+                }, 1000)
+              }else{
+                this.$toast('注册失败！');
+              }
+            }, 5000)
+          },8000)
         }
       },
 

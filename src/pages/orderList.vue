@@ -121,7 +121,7 @@
           second = "" + "0" + second
         }
 
-        var res = year + '-' + month + '-' + day + " hours" + ':' + min + ':' + second;
+        var res = year + '-' + month + '-' + day + " " + hours + ':' + min + ':' + second;
         return res
       },
 

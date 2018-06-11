@@ -12,44 +12,58 @@ const html_plus = {
     var res = cmr.supportedImageResolutions[0];
     var fmt = cmr.supportedImageFormats[0];
     console.log("Resolution: "+res+", Format: "+fmt);
-    cmr.captureImage( function( path ){
-        plus.io.resolveLocalFileSystemURL(path, function(entry) {
-          return entry.toLocalURL();
-        }, function(e) {
-          outLine("读取拍照文件错误：" + e.message);
-        });
-      },
-      function( error ) {
-        /*alert( "Capture image failed: " + error.message );*/
+    cmr.captureImage( ( capturedFile ) => {
+        // let promise = new Promise(function (resolve, reject) {
+            plus.io.resolveLocalFileSystemURL(capturedFile, (entry) => {
+              this.img_path = entry.toLocalURL();
+              // resolve(entry.toLocalURL());
+            },(error) => {
+              // reject(error)
+            })
+        // })
+        // return promise;
+      },(error) => {
+        console.log(error)
       },
       {resolution:res,format:fmt}
     );
   },
 
+  img_path: '',
   task: null,
-  res: '',
+  respon: '',
 
   onStateChanged(upload, status) {
     if ( upload.state == 4 && status == 200 ) {
       // 上传完成
-      this.res = upload.responseText;
+      this.respon = upload.responseText;
+      localStorage.setItem("wrct_reg", this.respon)
+      console.log(this.respon,"识别结果")
     }
   },
 
   uploadImg(path,obj) {
-    this.task = plus.uploader.createUpload( obj.url);
-    this.task.addFile( path, {key:"file"} );
+    console.log(path, "图片")
+    var task = plus.uploader.createUpload( obj.url,  {}, function ( t, status ) {
+      // 上传完成
+      if ( status == 200 ) {
+        // alert( "Upload success: " + t.url );
+      } else {
+        // alert( "Upload failed: " + status );
+      }
+    });
+    task.addFile( path, {key:"file"} );
     if(obj.params) {
-      this.task.addData( "userName", obj.params.username );
-      this.task.addData( "password", obj.params.password );
+      task.addData( "userName", obj.params.username );
+      task.addData( "password", obj.params.password );
     }
-    this.task.addEventListener( "statechanged", onStateChanged, false );
-    this.task.start();
+    task.addEventListener( "statechanged", this.onStateChanged, false );
+    task.start();
 
 
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => {
-        return resolve(this.res);
+        resolve(this.res);
       }, 200)
     })
     return promise

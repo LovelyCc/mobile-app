@@ -9,7 +9,7 @@
           <li v-for="(item,index) in classes" @click="getMenu(index)" :class="{'active': item.key == active}">{{item.name}}</li>
         </ul>
       </div>
-      <div style="position: relative;float: right; width: 75%">
+      <div style="position: relative;float: right; width: 75%; margin-bottom: 50px;">
         <div v-for="(item, index) in menu" class="item">
           <div class="img-box">
             <img :src='item.picPath' alt="">
@@ -167,6 +167,7 @@
             }
             this.menu = this.cate1;
             this.inFromTJ();
+            this.confirmNum();
           })
         },err => {
           console.log(err, "菜单")
@@ -186,6 +187,7 @@
 
       // 从推荐页面点击进入
       inFromTJ() {
+
         let foodId = this.$route.query.id;
         let cateId = this.$route.query.category;
         if(foodId && cateId) {
@@ -213,6 +215,8 @@
       this.getMenuAll();
       this.confirmNum();
     }
+
+
   };
 </script>
 
@@ -310,7 +314,7 @@
     width: 100%;
     height: 60px;
     border-top: 1px solid #eee;
-    position: absolute;
+    position: fixed;
     bottom: 50px;
     z-index: 2;
     background-color: #fff;

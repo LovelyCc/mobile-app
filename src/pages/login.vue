@@ -21,6 +21,9 @@
       </div>
       <div v-show="isFace" class="face">
         <img src="../assets/face.png" @click="photos()" alt="">
+        <div class="loading-login" v-if="isShowFace">
+          <van-loading color="white" class="loading-con"/>
+        </div>
       </div>
 			<p>
         <span @click="isFace = !isFace">
@@ -38,7 +41,7 @@
 <script>
   import html_plus from '../plusready.js'
   import $http from '../axios/http.js'
-  import { Cell, CellGroup, Field, Button } from 'vant'
+  import { Cell, CellGroup, Field, Button, Loading } from 'vant'
 	export default{
 		name: 'login',
 		data() {
@@ -46,30 +49,40 @@
 				username: '',
 				password: '',
 				loading: false,
-        isFace: false
+        isFace: false,
+        img_path: '',
+        isShowFace: false
 			}
 		},
     components:{
       [Button.name]: Button,
       [Cell.name]: Cell,
       [CellGroup.name]: CellGroup,
-      [Field.name]: Field
+      [Field.name]: Field,
+      [Loading.name]: Loading
     },
 		methods: {
 		  photos() {
-        let img_path = html_plus.captureImage();
-        html_plus.uploadImg(img_path, {
-          url: 'http://172.20.10.9:8080/restaurant/user/login'
-        }).then((res) => {
-          if(res.status < 85) {
-            this.$toast('人脸不匹配，可以重新登录或输入用户名密码登录~');
-          } else {
-            localStorage.setItem("wrct_username", res.userName);
-            localStorage.setItem("wrct_userid", res.userId);
-            this.goTo("/commend");
-          }
-        })
-
+		    this.isShowFace = true;
+        html_plus.captureImage();
+        setTimeout(() => {
+          this.img_path = html_plus.img_path;
+          console.log(this.img_path,"nihaosa")
+          html_plus.uploadImg(this.img_path, {
+            url: 'http://192.168.43.125:8080/restaurant/user/facelogin'
+          })
+          setTimeout(() => {
+            let ress = JSON.parse(localStorage.getItem("wrct_reg"));
+            this.isShowFace = false;
+            if(ress.status >= 10) {
+              localStorage.setItem("wrct_username", ress.userName);
+              localStorage.setItem("wrct_userid", ress.userId);
+              this.goTo("/commend")
+            }else if(ress.status == -1){
+              this.$toast('人脸不匹配！');
+            }
+          }, 4000)
+        },8000)
       },
 
 			checkLogin() {
@@ -77,7 +90,6 @@
 					this.$toast('用户名和密码不能为空~');
 				}else {
 					this.loading = true;
-          // this.goTo("/commend")
 					this.login();
 				}
 			},
@@ -139,6 +151,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+  }
+
+  .loading-login {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0,0,0,0);
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    .loading-con {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
   }
 
 </style>
