@@ -1,6 +1,7 @@
 # mobile-app
 
 > A Vue.js project
+> 毕业设计项目 简单的vue单页应用，登录（账号密码登录、人脸识别登录）、点餐、下单、
 
 ## Build Setup
 
